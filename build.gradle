@@ -4,10 +4,13 @@ plugins {
     id 'java'
 }
 
+/*
 group 'opendap'
 version '1.0-SNAPSHOT'
 sourceCompatibility = 1.7
+ */
 
+/*
 sourceSets {
     main {
         java {
@@ -19,15 +22,21 @@ sourceSets {
         // add tests sources here (this project didn't have them!)
     }
 }
+ */
 
+/*
 dependencies {
     // Add all the jar dependencies from the lib folder.
     compile fileTree(dir: 'lib', include: ['*.jar'])
 }
+ */
+
 //Ant Targets: [init, clean, PreProcessSourceCode, compile, server, robots, hyrax-robots, hyrax-robots-dist]
 
     // Compiler Settings
-    project.ext.set("compile.debug", "on")
+
+/*
+    project_ext.set("compile.debug", "on")
     project.ext.set("compile.debuglevel", "lines,vars,source")
     project.ext.set("compile.deprecation", "on")
 
@@ -38,29 +47,32 @@ dependencies {
     project.ext.set("classic.compiler", "classic")
     project.ext.set("build.compiler", "${project.'modern.compiler'}")
     project.ext.set("build.sysclasspath", "ignore")
+ */
 
     // Project directories
-    project.ext.set("src.dir", "${projectDir}/src")
-    project.ext.set("doc.dir", "${projectDir}/doc")
-    project.ext.set("lib.dir", "${projectDir}/lib")
-    project.ext.set("resources.dir", "${projectDir}/resources")
-    project.ext.set("WebInfResources.dir", "${projectDir}/${project.'resources.dir'}/hyrax/WEB-INF\"/")
-    project.ext.set("distributionResources.dir", "${projectDir}/${project.'resources.dir'}/distribution")
+    project.ext.set("src_dir", "${projectDir}/src")
+    project.ext.set("doc_dir", "${projectDir}/doc")
+    project.ext.set("lib_dir", "${projectDir}/lib")
+    project.ext.set("resources_dir", "${projectDir}/resources")
+    project.ext.set("web_inf_resources_dir", "${resources_dir}/hyrax/WEB-INF\"/")
+    project.ext.set("distribution_resources_dir", "${resources_dir}/distribution")
 
     // Build Directories
-    project.ext.set("build.dir", "${buildDir}")
-    project.ext.set("build.classes", "$project.'build.dir'}/classes")
-    project.ext.set("build.docs", "${project.'build.dir'}/docs")
-    project.ext.set("build.dist", "${project.'build.dir'}/dist")
-    project.ext.set("build.lib", "${project.'build.dir'}/lib")
-    project.ext.set("build.run", "${project.'build.dir'}/run")
-    project.ext.set("build.src", "${project.'build.dir'}/src")
-    project.ext.set("build.hyrax.resources", "${project.'build.dir'}/resources")
-    project.ext.set("hyraxResources.dir", "${project.'resources.dir'}/hyrax")
-    project.ext.set("ngapResources.dir", "${project.'resources.dir'}/ngap")
-    project.ext.set("robotsResources.dir", "${project.'resources.dir'}/robots")
-    project.ext.set("build.robots.resources", "${project.'build.dir'}/robots")
-    project.ext.set("wcs.resources.dir", "${project.'resources.dir'}/WCS/2.0")
+    project.ext.set("build_dir", "${buildDir}")
+    project.ext.set("build_classes", "${build_dir}/classes")
+    project.ext.set("build_docs", "${build_dir}/docs")
+    project.ext.set("build_dist", "${build_dir}/dist")
+    project.ext.set("build_lib", "${build_dir}/lib")
+    project.ext.set("build_run", "${build_dir}/run")
+    project.ext.set("build_src", "${build_dir}/src")
+    project.ext.set("build_hyrax_resources", "${build_dir}/resources")
+
+    project.ext.set("hyrax_resources_dir", "${resources_dir}/hyrax")
+    project.ext.set("ngap_resources_dir", "${resources_dir}/ngap")
+    project.ext.set("robots_resources_dir", "${resources_dir}/robots")
+    project.ext.set("build_robots_resources", "${resources_dir}/robots")
+    project.ext.set("wcs_resources_dir", "${resources_dir}/WCS/2.0")
+/*
 
     // Libraries
     project.ext.set("json.lib", "gson-2.3.1.jar")
@@ -102,6 +114,7 @@ dependencies {
     project.ext.set("xlink.lib", "xlink-v_1_0-1.4.0.jar")
     project.ext.set("owasp-encoder", "encoder-1.2.2.jar")
     project.ext.set("owasp-encoder-jsp", "encoder-jsp-1.2.2.jar")
+ */
 
 def  tstamp()
 {
@@ -112,29 +125,32 @@ def  tstamp()
 
 task init_dir {
 
-    mkdir "${project.'build.dir'}"
-    mkdir "${project.'build.classes'}"
-    mkdir "${project.'build.docs'}"
-    mkdir "${project.'build.dist'}"
-    mkdir "${project.'build.lib'}"
-    mkdir "${project.'build.run'}"
-    mkdir "${project.'build.src'}"
+    mkdir "${build_dir}"
+    mkdir "${build_classes}"
+    mkdir "${build_docs}"
+    mkdir "${build_dist}"
+    mkdir "${build_lib}"
+    mkdir "${build_run}"
+    mkdir "${build_src}"
+    mkdir "${build_hyrax_resources}"
 
-// filter ???
+    // filter ???
     println("Time stamp: ${tstamp()}")
+
+    /*
     println("hyrax-libs:")
+
     def path = ant.path {
         fileset(dir: 'lib', includes: '*.jar')
     }
     path.list().each {
         println it
     }
+    */
 
 }
 
 task PreProcessSourceCode (type: Copy) {
-    dependsOn(["clean"])
-//    init_dir()
 
     println("GradleFile: ${buildFile}. Moving and filtering Source code.")
     println("")
@@ -144,7 +160,7 @@ task PreProcessSourceCode (type: Copy) {
     println("DEPLOYMENT_CONTEXT: ${DEPLOYMENT_CONTEXT}")
     println("")
 
-    from("${project.'src.dir'}") {
+    from("${src_dir}") {
         include "opendap/**"
         include "org/opendap/**"
         //filter(ReplaceTokens, tokens: [version: '2.3.1'])
@@ -161,22 +177,20 @@ task PreProcessSourceCode (type: Copy) {
         exclude "opendap/noaa_s3/**"
         // Exclude async test code
         exclude "opendap/async/**"
-
     }
-    into "${project.'build.src'}"
 
+    into "${build_src}"
 
-
-//    into("${project.'build.robots.resources'}")
-//    from("${project.'robotsResources.dir'}")
+    //    into("${project.'build.robots.resources'}")
+    //    from("${project.'robotsResources.dir'}")
 
     exclude '**/*.bak'
     includeEmptyDirs = false
 }
 
 task copyResources (type: Copy) {
-    println("From: ${project.'resources.dir'}")
-    from("${project.'resources.dir'}"){
+    println("From: ${resources_dir}")
+    from("${resources_dir}"){
         include "xsl/**"
         include "WEB-INF/**"
         exclude "WEB-INF/web.xml"
@@ -184,6 +198,9 @@ task copyResources (type: Copy) {
         exclude "WEB-INF/logback.xml"
         exclude "WEB-INF/logback-test.xml"
     }
-    println("To: ${project.'build.hyrax.resources'}")
-    into("${project.'build.hyrax.resources'}")
+    println("To: ${build_hyrax_resources}")
+    into("${build_hyrax_resources}")
+
+    exclude '**/*.bak'
+    includeEmptyDirs = false
 }
