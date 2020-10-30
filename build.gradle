@@ -58,87 +58,28 @@ dependencies {
     implementation group: 'commons-codec', name: 'commons-codec', version: '1.8'
 }
 
-// Set external properties with dots
-// Compiler Settings
-/*
-ext.set("compile.debug", "on")
-ext.set("compile.debuglevel", "lines,vars,source")
-ext.set("compile.deprecation", "on")
+// see https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html
+project.ext {
+    resources_dir = "${projectDir}/resources"
+    // WebInf_resources_dir = "${project.resources_dir}/hyrax/WEB-INF"
+    // distribution_resources_dir = "${project.resources_dir}/distribution"
 
-ext.set("compile.TARGET", "1.7")
-ext.set("compile.SOURCE", "1.7")
+    // Build Directories
+    build_dir = "${buildDir}"
+    build_classes = "${project.build_dir}/classes"
+    build_docs = "${project.build_dir}/docs"
+    build_dist = "${project.build_dir}/dist"
+    build_lib = "${project.build_dir}/lib"
+    build_run = "${project.build_dir}/run"
+    build_src = "${project.build_dir}/src"
+    build_resources = "${project.build_dir}/resources"
 
-ext.set("modern.compiler", "modern")
-ext.set("classic.compiler", "classic")
-ext.set("build.compiler", "${project.'modern.compiler'}")
-ext.set("build.sysclasspath", "ignore")
- */
-
-// Project directories
-//.set("src.dir", "${projectDir}/src")
-// ext.set("doc.dir", "${projectDir}/doc")
-// ext.set("lib.dir", "${projectDir}/lib")
-ext.set("resources_dir", "${projectDir}/resources")
-ext.set("WebInf_resources_dir", "${projectDir}/${project.resources_dir}/hyrax/WEB-INF")
-ext.set("distribution_resources_dir", "${projectDir}/${project.resources_dir}/distribution")
-
-// Build Directories
-ext.set("build_dir", "${buildDir}")
-ext.set("build_classes", "$project.build_dir}/classes")
-ext.set("build_docs", "${project.build_dir}/docs")
-ext.set("build_dist", "${project.build_dir}/dist")
-ext.set("build_lib", "${project.build_dir}/lib")
-ext.set("build_run", "${project.build_dir}/run")
-ext.set("build_src", "${project.build_dir}/src")
-ext.set("build_hyrax_resources", "${project.build_dir}/resources")
-ext.set("hyrax_resources_dir", "${project.resources_dir}/hyrax")
-ext.set("ngap_resources_dir", "${project.resources_dir}/ngap")
-ext.set("robots_resources_dir", "${project.resources_dir}/robots")
-ext.set("build_robots_resources", "${project.build_dir}/robots")
-ext.set("wcs_resources_dir", "${project.resources_dir}/WCS/2.0")
-
-// Libraries
-/*
-ext.set("json.lib", "gson-2.3.1.jar")
-ext.set("junit.lib", "junit-4.4.jar")
-ext.set("jdom.lib", "jdom-1.1.1.jar")
-ext.set("urlRewrite.lib", "urlrewrite-3.2.0.jar")
-ext.set("slf4j.lib", "slf4j-api-1.6.1.jar")
-ext.set("logback-core.lib", "logback-core-0.9.26.jar")
-ext.set("logback-classic.lib", "logback-classic-0.9.26.jar")
-ext.set("owlim.lib", "owlim-lite-4.3.jar")
-ext.set("openrdf-sesame.lib", "openrdf-sesame-2.6.2-onejar.jar")
-ext.set("commons-cli.lib", "apache-commons-cli-1.2.jar")
-ext.set("commons-codec.lib", "apache-commons-codec-1.8.jar")
-ext.set("commons-httpclient.lib", "apache-commons-httpclient-3.1.jar")
-ext.set("commons-lang.lib", "apache-commons-lang-2.5.jar")
-ext.set("commons-logging.lib", "apache-commons-logging-1.1.3.jar")
-ext.set("commons-io.lib", "apache-commons-io-2.4.jar")
-ext.set("http-components-httpclient.lib", "org.apache.httpcomponents.httpclient_4.5.3.jar")
-ext.set("http-components-httpcore.lib", "org.apache.httpcomponents.httpcore_4.4.6.jar")
-ext.set("xalan.lib", "xalan.jar")
-ext.set("xercesImpl.lib", "xercesImpl-2.8.1.jar")
-ext.set("xercesXmlApis.lib", "xml-apis-2.8.1.jar")
-ext.set("saxon-jdom.lib", "saxon-9.1.0.5-jdom.jar")
-ext.set("saxon-s9api.lib", "saxon-9.1.0.5-s9api.jar")
-ext.set("saxon.lib", "saxon-9.1.0.5.jar")
-ext.set("catalina.lib", "catalina-6.0.14.jar")
-ext.set("servlet-api.lib", "servlet-api-3.0.jar")
-ext.set("json.lib", "json-simple-1.1.1.jar")
-
-// WCS Libs
-ext.set("ogc-wcs.lib", "wcs-v_2_0-2.6.1.jar")
-ext.set("ogc-gml.lib", "gml-v_3_2_1-2.6.1.jar")
-ext.set("ogc-swe.lib", "sweCommon-v_2_0-2.6.1.jar")
-ext.set("ogc-gmlcov.lib", "gmlcov-v_1_0-2.6.1.jar")
-ext.set("ogc-ows.lib", "ows-v_2_0-2.6.1.jar")
-ext.set("ogc-jaxb.lib", "jaxb2-basics-runtime-0.11.0.jar")
-ext.set("jaxb-core.lib", "jaxb-core-2.3.0-b170127.1453.jar")
-ext.set("jaxb-impl.lib", "jaxb-impl-2.3.0-b170127.1453.jar")
-ext.set("xlink.lib", "xlink-v_1_0-1.4.0.jar")
-ext.set("owasp-encoder", "encoder-1.2.2.jar")
-ext.set("owasp-encoder-jsp", "encoder-jsp-1.2.2.jar")
- */
+    hyrax_resources_dir = "${project.resources_dir}/hyrax"
+    ngap_resources_dir = "${project.resources_dir}/ngap"
+    robots_resources_dir = "${project.resources_dir}/robots"
+    build_robots_resources = "${project.build_dir}/robots"
+    wcs_resources_dir = "${project.resources_dir}/WCS/2.0"
+}
 
 def  tstamp()
 {
@@ -155,7 +96,7 @@ task init_dir {
         mkdir "${project.'build_docs'}"
         mkdir "${project.'build_dist'}"
         mkdir "${project.'build_run'}"
-        mkdir "${project.'build_hyrax_resources'}"
+        mkdir "${project.'build_resources'}"
     }
 }
 
