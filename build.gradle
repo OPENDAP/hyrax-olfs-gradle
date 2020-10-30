@@ -1,0 +1,208 @@
+import java.text.SimpleDateFormat
+
+plugins {
+    id 'java'
+    id 'war'
+    id 'idea'
+    id 'project-report'
+}
+
+group 'org.opendap'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+ext {
+    junitVersion = '5.6.2'
+}
+
+dependencies {
+    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+    implementation group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
+    implementation 'org.apache.commons:commons-configuration2:2.7'
+    implementation group: 'org.apache.tomcat', name: 'tomcat-catalina', version: '8.0.36'
+    implementation group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
+    implementation group: 'org.apache.commons', name: 'com.springsource.org.apache.commons.httpclient', version: '3.1.0'
+    implementation group: 'org.owasp.encoder', name: 'encoder', version: '1.2.2'
+    implementation group: 'org.jvnet.ogc', name: 'gml-v_3_2_1', version: '2.6.1'
+    implementation group: 'org.jvnet.ogc', name: 'gmlcov-v_1_0', version: '2.6.1'
+    implementation group: 'org.jvnet.jaxb2_commons', name: 'jaxb2-basics-runtime', version: '0.11.0'
+    implementation group: 'org.jvnet.ogc', name: 'ows-v_2_0', version: '2.6.1'
+    implementation group: 'org.jvnet.ogc', name: 'sweCommon-v_2_0', version: '2.6.1'
+    implementation group: 'org.jvnet.ogc', name: 'wcs-v_2_0', version: '2.6.1'
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0-b170127.1453'
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0-b170127.1453'
+    implementation group: 'org.jdom', name: 'jdom', version: '1.1'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '0.9.26'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
+    implementation group: 'org.mortbay.jetty', name: 'servlet-api', version: '3.0.20100224'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.6.1'
+    implementation group: 'net.java.dev.urlrewrite', name: 'urlrewrite', version: '3.0.4'
+    implementation group: 'xalan', name: 'xalan', version: '2.7.1'
+    implementation group: 'xerces', name: 'xercesImpl', version: '2.8.1'
+    implementation group: 'apache-xerces', name: 'xml-apis', version: '2.9.1'
+    implementation group: 'commons-io', name: 'commons-io', version: '1.2'
+    //implementation group: 'org.junit', name: 'com.springsource.org.junit', version: '4.11.0'
+    implementation group: 'net.sf.saxon', name: 'saxon-jdom', version: '8.7'
+    implementation group: 'org.opengis.cite.saxon', name: 'saxon9', version: '9.0.0.8'
+    implementation group: 'commons-lang', name: 'commons-lang', version: '2.5'
+    implementation group: 'commons-cli', name: 'commons-cli', version: '1.2'
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.8'
+}
+
+// Set external properties with dots
+// Compiler Settings
+ext.set("compile.debug", "on")
+ext.set("compile.debuglevel", "lines,vars,source")
+ext.set("compile.deprecation", "on")
+
+ext.set("compile.TARGET", "1.7")
+ext.set("compile.SOURCE", "1.7")
+
+ext.set("modern.compiler", "modern")
+ext.set("classic.compiler", "classic")
+ext.set("build.compiler", "${project.'modern.compiler'}")
+ext.set("build.sysclasspath", "ignore")
+
+// Project directories
+ext.set("src.dir", "${projectDir}/src")
+ext.set("doc.dir", "${projectDir}/doc")
+ext.set("lib.dir", "${projectDir}/lib")
+ext.set("resources.dir", "${projectDir}/resources")
+ext.set("WebInfResources.dir", "${projectDir}/${project.'resources.dir'}/hyrax/WEB-INF\"/")
+ext.set("distributionResources.dir", "${projectDir}/${project.'resources.dir'}/distribution")
+
+// Build Directories
+ext.set("build.dir", "${buildDir}")
+ext.set("build.classes", "$project.'build.dir'}/classes")
+ext.set("build.docs", "${project.'build.dir'}/docs")
+ext.set("build.dist", "${project.'build.dir'}/dist")
+ext.set("build.lib", "${project.'build.dir'}/lib")
+ext.set("build.run", "${project.'build.dir'}/run")
+ext.set("build.src", "${project.'build.dir'}/src")
+ext.set("build.hyrax.resources", "${project.'build.dir'}/resources")
+ext.set("hyraxResources.dir", "${project.'resources.dir'}/hyrax")
+ext.set("ngapResources.dir", "${project.'resources.dir'}/ngap")
+ext.set("robotsResources.dir", "${project.'resources.dir'}/robots")
+ext.set("build.robots.resources", "${project.'build.dir'}/robots")
+ext.set("wcs.resources.dir", "${project.'resources.dir'}/WCS/2.0")
+
+// Libraries
+ext.set("json.lib", "gson-2.3.1.jar")
+ext.set("junit.lib", "junit-4.4.jar")
+ext.set("jdom.lib", "jdom-1.1.1.jar")
+ext.set("urlRewrite.lib", "urlrewrite-3.2.0.jar")
+ext.set("slf4j.lib", "slf4j-api-1.6.1.jar")
+ext.set("logback-core.lib", "logback-core-0.9.26.jar")
+ext.set("logback-classic.lib", "logback-classic-0.9.26.jar")
+ext.set("owlim.lib", "owlim-lite-4.3.jar")
+ext.set("openrdf-sesame.lib", "openrdf-sesame-2.6.2-onejar.jar")
+ext.set("commons-cli.lib", "apache-commons-cli-1.2.jar")
+ext.set("commons-codec.lib", "apache-commons-codec-1.8.jar")
+ext.set("commons-httpclient.lib", "apache-commons-httpclient-3.1.jar")
+ext.set("commons-lang.lib", "apache-commons-lang-2.5.jar")
+ext.set("commons-logging.lib", "apache-commons-logging-1.1.3.jar")
+ext.set("commons-io.lib", "apache-commons-io-2.4.jar")
+ext.set("http-components-httpclient.lib", "org.apache.httpcomponents.httpclient_4.5.3.jar")
+ext.set("http-components-httpcore.lib", "org.apache.httpcomponents.httpcore_4.4.6.jar")
+ext.set("xalan.lib", "xalan.jar")
+ext.set("xercesImpl.lib", "xercesImpl-2.8.1.jar")
+ext.set("xercesXmlApis.lib", "xml-apis-2.8.1.jar")
+ext.set("saxon-jdom.lib", "saxon-9.1.0.5-jdom.jar")
+ext.set("saxon-s9api.lib", "saxon-9.1.0.5-s9api.jar")
+ext.set("saxon.lib", "saxon-9.1.0.5.jar")
+ext.set("catalina.lib", "catalina-6.0.14.jar")
+ext.set("servlet-api.lib", "servlet-api-3.0.jar")
+ext.set("json.lib", "json-simple-1.1.1.jar")
+
+// WCS Libs
+ext.set("ogc-wcs.lib", "wcs-v_2_0-2.6.1.jar")
+ext.set("ogc-gml.lib", "gml-v_3_2_1-2.6.1.jar")
+ext.set("ogc-swe.lib", "sweCommon-v_2_0-2.6.1.jar")
+ext.set("ogc-gmlcov.lib", "gmlcov-v_1_0-2.6.1.jar")
+ext.set("ogc-ows.lib", "ows-v_2_0-2.6.1.jar")
+ext.set("ogc-jaxb.lib", "jaxb2-basics-runtime-0.11.0.jar")
+ext.set("jaxb-core.lib", "jaxb-core-2.3.0-b170127.1453.jar")
+ext.set("jaxb-impl.lib", "jaxb-impl-2.3.0-b170127.1453.jar")
+ext.set("xlink.lib", "xlink-v_1_0-1.4.0.jar")
+ext.set("owasp-encoder", "encoder-1.2.2.jar")
+ext.set("owasp-encoder-jsp", "encoder-jsp-1.2.2.jar")
+
+def  tstamp()
+{
+    Date today = new Date ()
+    SimpleDateFormat df = new SimpleDateFormat ("MM/dd/yyyy_hh:mm")
+    return df.format (today)
+}
+
+task init_dir {
+    description "Create required folders in the build directory."
+    doLast {
+        mkdir "${project.'build.dir'}"
+        mkdir "${project.'build.classes'}"
+        mkdir "${project.'build.docs'}"
+        mkdir "${project.'build.dist'}"
+        mkdir "${project.'build.run'}"
+        mkdir "${project.'build.hyrax.resources'}"
+    }
+}
+
+task copyResources (type: Copy) {
+    description "Copy from original resources."
+    from("resources/hyrax") {
+        include "**"
+        include "xsl/**"
+        include "WEB-INF/**"
+        exclude "WEB-INF/web.xml"
+        exclude "WEB-INF/urlrewrite.xml"
+        exclude "WEB-INF/logback.xml"
+        exclude "WEB-INF/logback-test.xml"
+    }
+    into("build/resources")
+}
+
+task copySources (type: Copy) {
+    description "Copy original source code."
+    from("opendap_src"){
+        // include all the java files 
+        include "opendap/**"
+        include "org/opendap/**"
+        exclude "opendap/cmr/**"
+        // Exclude the experimental code
+        exclude "opendap/experiments/**"
+        // Exclude the Metacat code
+        exclude "opendap/metacat/**"
+        // Exclude WCS 1.1.2 and semantics code
+        exclude "opendap/wcs/v1_1_2/**"
+        exclude "opendap/semantics/**"
+        // Exclude prototype Amazon Web Services code from production
+        exclude "opendap/aws/**"
+        exclude "opendap/noaa_s3/**"
+        // Exclude async test code
+        exclude "opendap/async/**"
+    }
+    into("src/main/java")
+}
+
+task PreProcessSourceCode(dependsOn: ['clean', 'init_dir', 'copySources', 'copyResources']) {
+    description = "Moves selected source code from the development tree into the build/src directory. " +
+            "The code text is filtered to update version numbers."
+    //task delete
+    println("Time stamp: ${tstamp()}")
+}
+
+task getReports(dependsOn: ['htmlDependencyReport', 'propertyReport', 'taskReport', 'projectReport']){
+    println("Reports:")
+}
+
+test {
+    useJUnitPlatform()
+}
