@@ -26,6 +26,6 @@
   -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-    <xsl:variable name="HyraxVersion">@HyraxVersion@</xsl:variable>
+    <xsl:variable name="HyraxVersion">STARE-functions</xsl:variable>
     
 </xsl:stylesheet>

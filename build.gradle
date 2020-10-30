@@ -60,6 +60,7 @@ dependencies {
 
 // Set external properties with dots
 // Compiler Settings
+/*
 ext.set("compile.debug", "on")
 ext.set("compile.debuglevel", "lines,vars,source")
 ext.set("compile.deprecation", "on")
@@ -71,31 +72,33 @@ ext.set("modern.compiler", "modern")
 ext.set("classic.compiler", "classic")
 ext.set("build.compiler", "${project.'modern.compiler'}")
 ext.set("build.sysclasspath", "ignore")
+ */
 
 // Project directories
-ext.set("src.dir", "${projectDir}/src")
-ext.set("doc.dir", "${projectDir}/doc")
-ext.set("lib.dir", "${projectDir}/lib")
-ext.set("resources.dir", "${projectDir}/resources")
-ext.set("WebInfResources.dir", "${projectDir}/${project.'resources.dir'}/hyrax/WEB-INF\"/")
-ext.set("distributionResources.dir", "${projectDir}/${project.'resources.dir'}/distribution")
+//.set("src.dir", "${projectDir}/src")
+// ext.set("doc.dir", "${projectDir}/doc")
+// ext.set("lib.dir", "${projectDir}/lib")
+ext.set("resources_dir", "${projectDir}/resources")
+ext.set("WebInf_resources_dir", "${projectDir}/${project.resources_dir}/hyrax/WEB-INF")
+ext.set("distribution_resources_dir", "${projectDir}/${project.resources_dir}/distribution")
 
 // Build Directories
-ext.set("build.dir", "${buildDir}")
-ext.set("build.classes", "$project.'build.dir'}/classes")
-ext.set("build.docs", "${project.'build.dir'}/docs")
-ext.set("build.dist", "${project.'build.dir'}/dist")
-ext.set("build.lib", "${project.'build.dir'}/lib")
-ext.set("build.run", "${project.'build.dir'}/run")
-ext.set("build.src", "${project.'build.dir'}/src")
-ext.set("build.hyrax.resources", "${project.'build.dir'}/resources")
-ext.set("hyraxResources.dir", "${project.'resources.dir'}/hyrax")
-ext.set("ngapResources.dir", "${project.'resources.dir'}/ngap")
-ext.set("robotsResources.dir", "${project.'resources.dir'}/robots")
-ext.set("build.robots.resources", "${project.'build.dir'}/robots")
-ext.set("wcs.resources.dir", "${project.'resources.dir'}/WCS/2.0")
+ext.set("build_dir", "${buildDir}")
+ext.set("build_classes", "$project.build_dir}/classes")
+ext.set("build_docs", "${project.build_dir}/docs")
+ext.set("build_dist", "${project.build_dir}/dist")
+ext.set("build_lib", "${project.build_dir}/lib")
+ext.set("build_run", "${project.build_dir}/run")
+ext.set("build_src", "${project.build_dir}/src")
+ext.set("build_hyrax_resources", "${project.build_dir}/resources")
+ext.set("hyrax_resources_dir", "${project.resources_dir}/hyrax")
+ext.set("ngap_resources_dir", "${project.resources_dir}/ngap")
+ext.set("robots_resources_dir", "${project.resources_dir}/robots")
+ext.set("build_robots_resources", "${project.build_dir}/robots")
+ext.set("wcs_resources_dir", "${project.resources_dir}/WCS/2.0")
 
 // Libraries
+/*
 ext.set("json.lib", "gson-2.3.1.jar")
 ext.set("junit.lib", "junit-4.4.jar")
 ext.set("jdom.lib", "jdom-1.1.1.jar")
@@ -135,6 +138,7 @@ ext.set("jaxb-impl.lib", "jaxb-impl-2.3.0-b170127.1453.jar")
 ext.set("xlink.lib", "xlink-v_1_0-1.4.0.jar")
 ext.set("owasp-encoder", "encoder-1.2.2.jar")
 ext.set("owasp-encoder-jsp", "encoder-jsp-1.2.2.jar")
+ */
 
 def  tstamp()
 {
@@ -146,12 +150,12 @@ def  tstamp()
 task init_dir {
     description "Create required folders in the build directory."
     doLast {
-        mkdir "${project.'build.dir'}"
-        mkdir "${project.'build.classes'}"
-        mkdir "${project.'build.docs'}"
-        mkdir "${project.'build.dist'}"
-        mkdir "${project.'build.run'}"
-        mkdir "${project.'build.hyrax.resources'}"
+        mkdir "${project.build_dir}"
+        mkdir "${project.'build_classes'}"
+        mkdir "${project.'build_docs'}"
+        mkdir "${project.'build_dist'}"
+        mkdir "${project.'build_run'}"
+        mkdir "${project.'build_hyrax_resources'}"
     }
 }
 
