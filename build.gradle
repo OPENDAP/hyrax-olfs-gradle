@@ -12,6 +12,10 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
     jcenter()
+    maven {
+        url "https://repo.enonic.com/public"
+    }
+
 }
 
 ext {
@@ -19,16 +23,18 @@ ext {
 }
 
 dependencies {
-    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 
-    implementation group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
-    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation group: 'junit', name: 'junit', version: '4.4'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.6.1'
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
-    implementation 'org.apache.commons:commons-configuration2:2.7'
-    implementation group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
-    implementation group: 'org.apache.commons', name: 'com.springsource.org.apache.commons.httpclient', version: '3.1.0'
+    implementation group: 'commons-cli', name: 'commons-cli', version: '1.2'
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.8'
+    implementation group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.4'
+    implementation group: 'commons-lang', name: 'commons-lang', version: '2.5'
+    implementation group: 'commons-logging', name: 'commons-logging', version: '1.1.3'
     implementation group: 'org.owasp.encoder', name: 'encoder', version: '1.2.2'
     implementation group: 'org.jvnet.ogc', name: 'gml-v_3_2_1', version: '2.6.1'
     implementation group: 'org.jvnet.ogc', name: 'gmlcov-v_1_0', version: '2.6.1'
@@ -38,22 +44,23 @@ dependencies {
     implementation group: 'org.jvnet.ogc', name: 'wcs-v_2_0', version: '2.6.1'
     implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0-b170127.1453'
     implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0-b170127.1453'
-    implementation group: 'org.jdom', name: 'jdom', version: '1.1'
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '0.9.26'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
+    implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.6'
     implementation group: 'org.mortbay.jetty', name: 'servlet-api', version: '3.0.20100224'
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.6.1'
     implementation group: 'net.java.dev.urlrewrite', name: 'urlrewrite', version: '3.0.4'
     implementation group: 'xalan', name: 'xalan', version: '2.7.1'
     implementation group: 'xerces', name: 'xercesImpl', version: '2.8.1'
     implementation group: 'apache-xerces', name: 'xml-apis', version: '2.9.1'
     implementation group: 'commons-io', name: 'commons-io', version: '1.2'
-    //implementation group: 'org.junit', name: 'com.springsource.org.junit', version: '4.11.0'
-    implementation group: 'net.sf.saxon', name: 'saxon-jdom', version: '8.7'
-    implementation group: 'org.opengis.cite.saxon', name: 'saxon9', version: '9.0.0.8'
-    implementation group: 'commons-lang', name: 'commons-lang', version: '2.5'
-    implementation group: 'commons-cli', name: 'commons-cli', version: '1.2'
-    implementation group: 'commons-codec', name: 'commons-codec', version: '1.8'
+    implementation group: 'org.jdom', name: 'jdom', version: '1.1.1'
+    implementation group: 'net.sf.saxon', name: 'saxon', version: '9.1.0.8'
+    implementation group: 'net.sf.saxon', name: 'saxon-jdom', version: '9.1.0.8'
+    implementation group: 'org.clojars.pjt', name: 'saxon9-s9api', version: '9.1.0.8'
+    implementation group: 'ch.qos.logback', name: 'logback-core', version: '0.9.26'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
+    implementation group: 'org.tuckey', name: 'urlrewritefilter', version: '3.2.0'
+    implementation group: 'org.owasp.encoder', name: 'encoder-jsp', version: '1.2'
 }
 
 // see https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html
@@ -99,15 +106,37 @@ task copyResources (type: Copy) {
         include "**"
         include "xsl/**"
         include "WEB-INF/**"
+        exclude "WEB-INF/logback.xml"
+        exclude "WEB-INF/logback-test.xml"
+    }
+    from("./doc") {
+        exclude "src.distribution.readme"
+        into("docs")
+    }
+    from("resources/WCS/2.0/WEB-INF"){
+        include "**"
+        include "xsl/**"
+        include "WEB-INF/**"
+        exclude "WEB-INF/web.xml"
+        exclude "WEB-INF/urlrewrite.xml"
+        exclude "WEB-INF/logback.xml"
+        exclude "WEB-INF/logback-test.xml"
+        into("WEB-INF")
+    }
+    into("src/main/webapp")
+}
+
+task copyWCS (type: Copy){
+    from("resources/WCS/2.0/WEB-INF"){
+        include "**"
+        include "xsl/**"
+        include "WEB-INF/**"
         exclude "WEB-INF/web.xml"
         exclude "WEB-INF/urlrewrite.xml"
         exclude "WEB-INF/logback.xml"
         exclude "WEB-INF/logback-test.xml"
     }
-    from("./doc") {
-        into("docs")
-    }
-    into("src/main/webapp")
+    into("src/main/webapp/WEB-INF")
 }
 
 task copySources (type: Copy) {
