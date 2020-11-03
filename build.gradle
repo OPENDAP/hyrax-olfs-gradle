@@ -126,19 +126,6 @@ task copyResources (type: Copy) {
     into("src/main/webapp")
 }
 
-task copyWCS (type: Copy){
-    from("resources/WCS/2.0/WEB-INF"){
-        include "**"
-        include "xsl/**"
-        include "WEB-INF/**"
-        exclude "WEB-INF/web.xml"
-        exclude "WEB-INF/urlrewrite.xml"
-        exclude "WEB-INF/logback.xml"
-        exclude "WEB-INF/logback-test.xml"
-    }
-    into("src/main/webapp/WEB-INF")
-}
-
 task copySources (type: Copy) {
     description "Copy original source code."
     from("opendap_src"){
